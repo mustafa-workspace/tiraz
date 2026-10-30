@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TIRAZ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 300px;
+      background: linear-gradient(145deg, #0d0d1a 0%, #0f0f23 100%);
+      color: #e2e8f0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+    }
+
+    /* ---- Header ---- */
+    .header {
+      padding: 18px 20px 14px;
+      background: linear-gradient(90deg, rgba(99, 179, 237, 0.07), rgba(159, 122, 234, 0.05));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, rgba(99, 179, 237, 0.2), rgba(159, 122, 234, 0.2));
+      border: 1px solid rgba(99, 179, 237, 0.3);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .logo-name {
+      font-size: 15px;
+      font-weight: 700;
+      background: linear-gradient(90deg, #63b3ed, #9f7aea);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 0.8px;
+    }
+
+    .logo-tagline {
+      font-size: 10px;
+      color: #4a5568;
+      letter-spacing: 0.3px;
+    }
+
+    /* ---- Status badge ---- */
+    .status-section {
+      padding: 14px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .status-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #4a5568;
+      margin-bottom: 8px;
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      background: rgba(104, 211, 145, 0.08);
+      border: 1px solid rgba(104, 211, 145, 0.25);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .status-badge:hover {
+      background: rgba(104, 211, 145, 0.13);
+      border-color: rgba(104, 211, 145, 0.4);
+    }
+
+    .status-badge.inactive {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #68d391;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    .status-dot.inactive {
+      background: #4a5568;
+    }
+
+    .status-text {
+      font-size: 12px;
+      font-weight: 600;
+      color: #68d391;
+      transition: color 0.2s;
+    }
+
+    .status-text.inactive {
+      color: #718096;
+    }
+
+    .status-hint {
+      margin-left: auto;
+      font-size: 10px;
+      color: #4a5568;
+    }
+
+    /* ---- Shortcuts section ---- */
+    .section {
+      padding: 14px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #4a5568;
+      margin-bottom: 10px;
+    }
+
+    .shortcut-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 0;
+    }
+
+    .shortcut-desc {
+      font-size: 12px;
+      color: #a0aec0;
+    }
+
+    .shortcut-keys {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    kbd {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-family: 'JetBrains Mono', 'Consolas', monospace;
+      font-size: 10px;
+      color: #e2e8f0;
+    }
+
+    .plus {
+      color: #4a5568;
+      font-size: 10px;
+    }
+
+    /* ---- Features ---- */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .feature-chip {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      font-size: 11px;
+      color: #718096;
+    }
+
+    .feature-chip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ---- Footer ---- */
+    .footer {
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-link {
+      font-size: 11px;
+      color: #4a5568;
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-link:hover {
+      color: #718096;
+    }
+
+    .version {
+      font-size: 10px;
+      color: #2d3748;
+      font-family: monospace;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo-icon">
+      <img style="width: 48px !important;" src="../icons/icon16.png" alt="tiraz" />
+    </div>
+    <div class="logo-text">
+      <span class="logo-name">TIRAZ</span>
+      <span class="logo-tagline">CSS Inspector for Web Developers</span>
+      <span class="logo-tagline version">Vesion 0.1.0</span>
+    </div>
+  </div>
+
+  <!-- Status -->
+  <div class="status-section">
+    <div class="status-label">Extension Status</div>
+    <div class="status-badge" id="status-badge">
+      <div class="status-dot" id="status-dot"></div>
+      <span class="status-text" id="status-text">Active on this page</span>
+      <span class="status-hint">click to test</span>
+    </div>
+  </div>
+
+  <!-- Shortcuts -->
+  <div class="section">
+    <div class="section-label">Keyboard Shortcuts</div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Inspect element</span>
+      <div class="shortcut-keys">
+        <kbd>Ctrl</kbd> <span class="plus">+</span> <kbd>Click</kbd>
+      </div>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Toggle inspect mode</span>
+      <div class="shortcut-keys">
+        <kbd>Ctrl</kbd> <span class="plus">+</span> <kbd>Shift</kbd> <span class="plus">+</span> <kbd>F</kbd>
+      </div>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Close / Exit mode</span>
+      <div class="shortcut-keys">
+        <kbd>Esc</kbd>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <div class="section">
+    <div class="section-label">Features</div>
+    <div class="feature-grid">
+      <div class="feature-chip">
+        <div class="feature-chip-dot" style="background:#63b3ed"></div>
+        Computed CSS
+      </div>
+      <div class="feature-chip">
+        <div class="feature-chip-dot" style="background:#9f7aea"></div>
+        Box Model
+      </div>
+      <div class="feature-chip">
+        <div class="feature-chip-dot" style="background:#68d391"></div>
+        All Properties
+      </div>
+      <div class="feature-chip">
+        <div class="feature-chip-dot" style="background:#f6ad55"></div>
+        Copy CSS
+      </div>
+      <div class="feature-chip">
+        <div class="feature-chip-dot" style="background:#fc8181"></div>
+        Color Swatches
+      </div>
+      <div class="feature-chip">
+        <div class="feature-chip-dot" style="background:#76e4f7"></div>
+        Live Search
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span class="version">v1.0.0</span>
+    <a href="https://linktr.ee/itsme.mustafa" target="_blank" class="footer-link" style="color: #2e71e4;">By: Mostafa
+      Jamal</a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+
+</html>

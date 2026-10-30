@@ -1,0 +1,592 @@
+/* ===== TIRAZ CSS Inspector Panel ===== */
+
+/* ---- Overlay highlight ---- */
+#TIRAZ-highlight {
+  position: fixed;
+  pointer-events: none;
+  z-index: 2147483645;
+  border: 2px solid rgba(99, 179, 237, 0.9);
+  background: rgba(99, 179, 237, 0.08);
+  border-radius: 3px;
+  transition: all 0.1s ease;
+  box-shadow: 0 0 0 1px rgba(99, 179, 237, 0.3), inset 0 0 12px rgba(99, 179, 237, 0.06);
+}
+
+/* ---- Hover label ---- */
+#TIRAZ-label {
+  position: fixed;
+  z-index: 2147483646;
+  background: rgba(15, 15, 30, 0.92);
+  color: #63b3ed;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(99, 179, 237, 0.4);
+  pointer-events: none;
+  white-space: nowrap;
+  backdrop-filter: blur(8px);
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ---- Main panel ---- */
+#TIRAZ-panel {
+  position: fixed;
+  z-index: 2147483647;
+  width: 380px;
+  max-height: 80vh;
+  background: linear-gradient(145deg, #0d0d1a 0%, #0f0f23 100%);
+  border: 1px solid rgba(99, 179, 237, 0.25);
+  border-radius: 12px;
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #e2e8f0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  resize: both;
+  min-width: 280px;
+  min-height: 200px;
+  backdrop-filter: blur(20px);
+  animation: TIRAZ-slide-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes TIRAZ-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ---- Panel header ---- */
+#TIRAZ-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: linear-gradient(90deg, rgba(99, 179, 237, 0.08) 0%, rgba(159, 122, 234, 0.06) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  cursor: grab;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+#TIRAZ-header:active {
+  cursor: grabbing;
+}
+
+#TIRAZ-logo {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex: 1;
+}
+
+#TIRAZ-logo svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+#TIRAZ-title {
+  font-size: 13px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #63b3ed, #9f7aea);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.5px;
+}
+
+#TIRAZ-selector-badge {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 10px;
+  color: #a0aec0;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 2px 7px;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#TIRAZ-header-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.TIRAZ-header-btn {
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #718096;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.TIRAZ-header-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+}
+
+.TIRAZ-header-btn.active {
+  background: rgba(99, 179, 237, 0.2);
+  color: #63b3ed;
+}
+
+/* ---- Tab bar ---- */
+#TIRAZ-tabs {
+  display: flex;
+  padding: 0 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  gap: 4px;
+  flex-shrink: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.TIRAZ-tab {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 9px 12px;
+  cursor: pointer;
+  color: #718096;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+
+.TIRAZ-tab:hover {
+  color: #a0aec0;
+}
+
+.TIRAZ-tab.active {
+  color: #63b3ed;
+  border-bottom-color: #63b3ed;
+}
+
+/* ---- Search bar ---- */
+#TIRAZ-search-wrap {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+#TIRAZ-search {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #e2e8f0;
+  font-size: 12px;
+  padding: 7px 10px 7px 32px;
+  outline: none;
+  transition: border-color 0.15s ease;
+  font-family: inherit;
+}
+
+#TIRAZ-search:focus {
+  border-color: rgba(99, 179, 237, 0.5);
+}
+
+#TIRAZ-search::placeholder {
+  color: #4a5568;
+}
+
+#TIRAZ-search-icon {
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #4a5568;
+  pointer-events: none;
+}
+
+#TIRAZ-search-wrap {
+  position: relative;
+}
+
+/* ---- Scrollable content ---- */
+#TIRAZ-body {
+  overflow-y: auto;
+  flex: 1;
+  padding: 8px 0;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(99, 179, 237, 0.3) transparent;
+}
+
+#TIRAZ-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+#TIRAZ-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#TIRAZ-body::-webkit-scrollbar-thumb {
+  background: rgba(99, 179, 237, 0.3);
+  border-radius: 3px;
+}
+
+/* ---- Property groups ---- */
+.TIRAZ-group {
+  margin-bottom: 2px;
+}
+
+.TIRAZ-group-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #4a5568;
+  transition: color 0.15s;
+  user-select: none;
+}
+
+.TIRAZ-group-header:hover {
+  color: #718096;
+}
+
+.TIRAZ-group-header .TIRAZ-group-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.TIRAZ-group-header .TIRAZ-chevron {
+  margin-left: auto;
+  transition: transform 0.2s ease;
+  color: #4a5568;
+}
+
+.TIRAZ-group-header.collapsed .TIRAZ-chevron {
+  transform: rotate(-90deg);
+}
+
+.TIRAZ-group-items {
+  overflow: hidden;
+}
+
+.TIRAZ-group-items.collapsed {
+  display: none;
+}
+
+/* ---- Property row ---- */
+.TIRAZ-row {
+  display: flex;
+  align-items: flex-start;
+  padding: 4px 16px;
+  gap: 10px;
+  transition: background 0.1s;
+  cursor: default;
+  position: relative;
+}
+
+.TIRAZ-row:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.TIRAZ-row.highlighted {
+  background: rgba(99, 179, 237, 0.06);
+}
+
+.TIRAZ-prop {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 11px;
+  color: #9f7aea;
+  min-width: 130px;
+  flex-shrink: 0;
+  word-break: break-word;
+  padding-top: 1px;
+}
+
+.TIRAZ-val-wrap {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.TIRAZ-val {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 11px;
+  color: #68d391;
+  word-break: break-all;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.TIRAZ-color-swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+/* ---- Copy button ---- */
+.TIRAZ-copy-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #4a5568;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: all 0.15s;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.TIRAZ-row:hover .TIRAZ-copy-btn {
+  display: flex;
+  align-items: center;
+}
+
+.TIRAZ-copy-btn:hover {
+  color: #63b3ed;
+  background: rgba(99, 179, 237, 0.1);
+}
+
+.TIRAZ-copy-btn.copied {
+  color: #68d391;
+}
+
+/* ---- Box model diagram ---- */
+#TIRAZ-box-model {
+  padding: 12px 16px;
+}
+
+.TIRAZ-bm-container {
+  position: relative;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: #718096;
+}
+
+.TIRAZ-bm-margin {
+  background: rgba(251, 191, 36, 0.08);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 6px;
+  padding: 4px;
+  position: relative;
+}
+
+.TIRAZ-bm-border {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 4px;
+  padding: 4px;
+}
+
+.TIRAZ-bm-padding {
+  background: rgba(52, 211, 153, 0.08);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  border-radius: 3px;
+  padding: 4px;
+}
+
+.TIRAZ-bm-content {
+  background: rgba(99, 179, 237, 0.12);
+  border: 1px solid rgba(99, 179, 237, 0.4);
+  border-radius: 2px;
+  text-align: center;
+  padding: 10px 4px;
+  color: #63b3ed;
+  font-weight: 600;
+}
+
+.TIRAZ-bm-label {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 6px;
+  font-size: 9.5px;
+}
+
+.TIRAZ-bm-side-row {
+  display: flex;
+  align-items: center;
+}
+
+.TIRAZ-bm-side-val {
+  padding: 0 8px;
+  white-space: nowrap;
+}
+
+/* ---- Footer ---- */
+#TIRAZ-footer {
+  padding: 8px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+#TIRAZ-footer-info {
+  font-size: 10px;
+  color: #4a5568;
+}
+
+#TIRAZ-copy-all-btn {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(99, 179, 237, 0.3);
+  background: rgba(99, 179, 237, 0.1);
+  color: #63b3ed;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.2px;
+}
+
+#TIRAZ-copy-all-btn:hover {
+  background: rgba(99, 179, 237, 0.2);
+  border-color: rgba(99, 179, 237, 0.5);
+}
+
+/* ---- Toast notification ---- */
+#TIRAZ-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(104, 211, 145, 0.15);
+  border: 1px solid rgba(104, 211, 145, 0.4);
+  color: #68d391;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 8px;
+  z-index: 2147483647;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(10px);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  white-space: nowrap;
+}
+
+#TIRAZ-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ---- Inspect mode indicator ---- */
+#TIRAZ-mode-badge {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2147483646;
+  background: linear-gradient(135deg, rgba(99, 179, 237, 0.15), rgba(159, 122, 234, 0.12));
+  border: 1px solid rgba(99, 179, 237, 0.35);
+  border-radius: 10px;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #63b3ed;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#TIRAZ-mode-badge.visible {
+  opacity: 1;
+}
+
+#TIRAZ-mode-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #63b3ed;
+  animation: TIRAZ-pulse 1.5s infinite;
+}
+
+@keyframes TIRAZ-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+}
+
+/* ---- Empty/error state ---- */
+#TIRAZ-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  color: #4a5568;
+  font-size: 12px;
+  text-align: center;
+  gap: 8px;
+}
+
+#TIRAZ-empty svg {
+  opacity: 0.3;
+}
+
+/* ---- Computed tab specifics ---- */
+.TIRAZ-inherited-badge {
+  font-size: 9px;
+  background: rgba(159, 122, 234, 0.15);
+  border: 1px solid rgba(159, 122, 234, 0.3);
+  color: #9f7aea;
+  border-radius: 3px;
+  padding: 1px 5px;
+  letter-spacing: 0.3px;
+  font-weight: 600;
+}
+
+
+/* version number */
+
+.version {
+  font-weight: lighter;
+}
